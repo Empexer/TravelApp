@@ -169,9 +169,13 @@ class TravelListViewController: UIViewController, UITableViewDelegate, UITableVi
                                 stop.location = CGPoint(x: xp, y: yp)
                             }
                         }
-                        if let spentMoneyString = stopJson["spentMoney"] as? String,
-                           let currency = Currency(rawValue: spentMoneyString) {
-                            
+                        if let spentMoney = stopJson["spentMoney"] as? Double {
+                            stop.spentMoney = spentMoney
+                              
+                        }
+                        
+                        if let currencyString = stopJson["currency"] as? String,  let currency = Currency(rawValue: currencyString) {
+                            stop.currency = currency
                         }
                         if let transportInt  = stopJson["transport"] as? Int, let transport = Transport.init(rawValue: transportInt) {
                             stop.transport = transport

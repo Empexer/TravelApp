@@ -20,8 +20,8 @@ class RLMTravel: Object {
         return #keyPath(RLMTravel.id)
         
     }
-    
 }
+
 extension RLMTravel {
     func toObject() -> Travel {
         let travel = Travel(userId: self.userId!, id: self.id!, name: self.name!, description: self.desc!)
@@ -31,13 +31,12 @@ extension RLMTravel {
             stop.rate = rlmStop.rate
             stop.location = CGPoint(x: rlmStop.latitude, y: rlmStop.longitude)
             stop.spentMoney = rlmStop.spentMoney
+            stop.currency = rlmStop.currency
             stop.transport = rlmStop.transport
             stop.decsription = rlmStop.desc
             travel.stops.append(stop)
-            
         }
         return travel
     }
-    
 }
 

@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseRemoteConfig
+import FirebaseAuth
 
 class LoadingViewController: UIViewController {
     
@@ -17,12 +18,19 @@ class LoadingViewController: UIViewController {
         let remoteCinfig = RemoteConfig.remoteConfig()
         remoteCinfig.fetchAndActivate { (status, error) in
             DispatchQueue.main.async {
-                self.showWelcome()
+                if let _ = Auth.auth().currentUser?.uid {
+                    self.showTravelList()
+                } else {
+                    self.showWelcome()
+                }
             }
-            
-            
         }
-        
+    }
+    
+    func showTravelList() {
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let firstVc = storyboard.instantiateViewController(identifier: "TravelListViewController") as! TravelListViewController
+        self.navigationController?.pushViewController(firstVc, animated: true)
     }
     
     func showWelcome() {

@@ -22,7 +22,7 @@ class Stop {
     var name: String = ""
     var rate: Int = 0
     var location: CGPoint = .zero  //x=0 y = 0
-    var spentMoney: String = ""
+    var spentMoney: Double = 0
     var transport: Transport = .none
     var currency: Currency = .none
     var decsription: String = ""
@@ -40,7 +40,12 @@ class Stop {
                 "rate": rate,
                 "location": "\(location.x) - \(location.y)",
                 "spentMoney": spentMoney,
+                "currency": currency.rawValue,
                 "transport": transport.rawValue,
                 "description": decsription]
+    }
+    
+    var spentMoneyText: String {
+        return  "\(spentMoney)" + currency.rawValue
     }
 }

@@ -44,13 +44,13 @@ class SpentMoneyViewController: UIViewController {
     }
     //MARK: - Action
     @IBAction func readyClicked(_ sender: Any) {
-        if let text = textField.text, let money = Int(text) {
+        if let text = textField.text, let money = Double(text) {
             if segmentMoney.selectedSegmentIndex == 0 {
-                delegate?.spent(money: String(money), currency: .dollar)
+                delegate?.spent(money: money, currency: .dollar)
             } else if segmentMoney.selectedSegmentIndex == 1 {
-                delegate?.spent(money: String(money), currency: .euro)
+                delegate?.spent(money: money, currency: .euro)
             } else if segmentMoney.selectedSegmentIndex == 2 {
-                delegate?.spent(money: String(money), currency: .ruble)
+                delegate?.spent(money: money, currency: .ruble)
             }
         }
         navigationController?.popViewController(animated: true)

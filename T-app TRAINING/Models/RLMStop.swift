@@ -17,11 +17,12 @@ class RLMStop: Object {
     @objc dynamic var rate: Int = 0
     @objc dynamic var latitude: Double = 0
     @objc dynamic var longitude: Double = 0
-    @objc dynamic var spentMoney: String = ""
+    @objc dynamic var spentMoney: Double = 0
     dynamic var transport: Transport = .none
+    dynamic var currency: Currency = .none
     @objc dynamic var desc: String = ""
     
     override static func primaryKey() -> String? {
-    return #keyPath(RLMStop.id)
-}
+        return #keyPath(RLMStop.id)
+    }
 }

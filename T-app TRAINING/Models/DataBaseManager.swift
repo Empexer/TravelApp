@@ -34,7 +34,9 @@ class DataBaseManager {
         let realm = try! Realm()
         let rlmTravels = realm.objects(RLMTravel.self)
         let rlmStops = realm.objects(RLMStop.self)
-        realm.delete(rlmTravels)
-        realm.delete(rlmStops)
+        try! realm.write {
+            realm.delete(rlmTravels)
+            realm.delete(rlmStops)
+        }
     }
 }

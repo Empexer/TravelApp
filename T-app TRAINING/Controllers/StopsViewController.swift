@@ -35,7 +35,7 @@ class StopsViewController: UIViewController,UITableViewDataSource,UITableViewDel
         let createStop = storyboard.instantiateViewController(identifier: "CreateYourStopViewController") as! CreateYourStopViewController
         createStop.delegate = self
         createStop.travelId = travel?.id ?? ""
-        createStop.dataStop = travel?.stops[indexPath.row]
+        createStop.existingStop = travel?.stops[indexPath.row]
         navigationController?.pushViewController(createStop, animated: true)
     }
     
@@ -50,7 +50,7 @@ class StopsViewController: UIViewController,UITableViewDataSource,UITableViewDel
         if let stop = travel?.stops[indexPath.row] {
             cell.nameLabel.text = stop.name
             cell.descriptionOfStop.text = stop.decsription
-            cell.spendMoney.text = stop.spentMoney
+            cell.spendMoney.text = stop.spentMoneyText
             
             if stop.rate == 1 {
                 (cell.rateStack.viewWithTag(1) as? UIImageView)?.image = #imageLiteral(resourceName: "Star Icon")
