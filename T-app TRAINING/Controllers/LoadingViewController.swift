@@ -16,12 +16,12 @@ class LoadingViewController: UIViewController {
         super.viewDidLoad()
         
         let remoteCinfig = RemoteConfig.remoteConfig()
-        remoteCinfig.fetchAndActivate { (status, error) in
-            DispatchQueue.main.async {
+        remoteCinfig.fetchAndActivate { [weak self] (status, error) in
+            DispatchQueue.main.async { [weak self] in
                 if let _ = Auth.auth().currentUser?.uid {
-                    self.showTravelList()
+                    self?.showTravelList()
                 } else {
-                    self.showWelcome()
+                    self?.showWelcome()
                 }
             }
         }

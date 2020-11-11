@@ -44,9 +44,9 @@ class LoginViewController: UIViewController {
             //ВОРНИНГ!
             return
         }
-        Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
+        Auth.auth().signIn(withEmail: email, password: password) { [weak self] (user, error) in
             if error != nil {
-                self.warningAnimation(text: "Error")
+                self?.warningAnimation(text: "Error")
                 
                 
                 return
@@ -54,11 +54,11 @@ class LoginViewController: UIViewController {
             if user != nil {
                 let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
                 let createStop = storyboard.instantiateViewController(identifier: "TravelListViewController") as! TravelListViewController
-                self.navigationController?.pushViewController(createStop, animated: true)
+                self?.navigationController?.pushViewController(createStop, animated: true)
                 return
                 
             }
-            self.warningAnimation(text: "There is no such user")
+            self?.warningAnimation(text: "There is no such user")
             
             
         }

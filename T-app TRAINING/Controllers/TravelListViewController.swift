@@ -29,7 +29,9 @@ class TravelListViewController: UIViewController, UITableViewDelegate, UITableVi
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        travels = DataBaseManager.share.getTravels()
+        let travelsObjects = DataBaseManager.share.getObjects(classType: RLMTravel.self)
+        let stopObject = DataBaseManager.share.getObjects(classType: RLMStop.self )
+        
         tableView.reloadData()
         getTravelFromServer()
         getStopsFromServer()
@@ -96,7 +98,8 @@ class TravelListViewController: UIViewController, UITableViewDelegate, UITableVi
         let alert = UIAlertController.init(title: "Путушествие", message: "Добавить в список", preferredStyle: .alert)
         alert.addTextField()
         alert.addTextField()
-        alert.addAction(UIAlertAction.init(title: "Добавить", style: .default, handler: { action in
+        alert.addAction(UIAlertAction.init(title: "Добавить", style: .default, handler: { [weak self] action in
+            guard let self = self else {return}
             if  let travelName = alert.textFields?[0].text, let travelDescription = alert.textFields?[1].text {
                 if let userId = Auth.auth().currentUser?.uid {
                     let id = UUID().uuidString
@@ -130,7 +133,8 @@ class TravelListViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     func getTravelFromServer() {
         let database = Database.database().reference()
-        database.child("travels").observeSingleEvent(of: .value) { (snapshot) in
+        database.child("travels").observeSingleEvent(of: .value) { [weak self] (snapshot) in
+            guard let self = self else {return}
             guard let value = snapshot.value as? [String: Any] else { return }
             DataBaseManager.share.clear()
             self.travels.removeAll()
@@ -151,7 +155,8 @@ class TravelListViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     func getStopsFromServer() {
         let database = Database.database().reference()
-        database.child("stops").observeSingleEvent(of: .value) { (snapshot) in
+        database.child("stops").observeSingleEvent(of: .value) { [weak self ] (snapshot) in
+            guard let self = self else {return}
             guard let value = snapshot.value as? [String: Any] else { return }
             for item in value.values {
                 if let stopJson = item as? [String: Any] {
@@ -201,7 +206,7 @@ class TravelListViewController: UIViewController, UITableViewDelegate, UITableVi
     func observTravel() {
         let realm = try! Realm()
         let travels = realm.objects(RLMTravel.self)
-        travelsNotification = travels.observe { (changes ) in
+        travelsNotification = travels.observe { [weak self] (changes ) in
             switch changes {
             
             case .initial(_):

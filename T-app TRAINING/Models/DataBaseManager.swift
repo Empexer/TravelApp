@@ -19,13 +19,12 @@ class DataBaseManager {
         try! realm.commitWrite()
     }
     
-    func getTravels() -> [Travel] {
-        var result: [Travel] = []
+    func getObjects<T: Object>(classType: T.Type) -> [T] {
+        var result: [T] = []
         let realm = try! Realm()
-        let rlmTravels = realm.objects(RLMTravel.self)
-        for rlmTravel in rlmTravels  {
-            let travel = rlmTravel.toObject()
-            result.append(travel)
+        let objects = realm.objects(T.self)
+        for object in objects  {
+            result.append(object)
             
         }
         return result
@@ -39,4 +38,5 @@ class DataBaseManager {
             realm.delete(rlmStops)
         }
     }
+    
 }

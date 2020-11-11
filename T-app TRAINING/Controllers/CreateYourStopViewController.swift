@@ -92,7 +92,8 @@ class CreateYourStopViewController: UIViewController {
         }
         dotsAnimationView.startAnimation()
         dotsAnimationView.isHidden = false
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: { [ weak self] in
+            guard let self = self else {return}
             self.dotsAnimationView.stopAnimation()
             self.navigationController?.popViewController(animated: true )
             
